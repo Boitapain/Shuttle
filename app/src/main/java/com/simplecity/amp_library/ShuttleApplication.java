@@ -52,6 +52,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -74,7 +75,24 @@ public class ShuttleApplication extends DaggerApplication {
 
     private RefWatcher refWatcher;
 
-    public HashMap<String, UserSelectedArtwork> userSelectedArtwork = new HashMap<>();
+    private final Map<String, UserSelectedArtwork> userSelectedArtwork = new HashMap<>();
+
+    public UserSelectedArtwork getUserSelectedArtwork(String key) {
+        return userSelectedArtwork.get(key);
+    }
+
+    public void putUserSelectedArtwork(String key, UserSelectedArtwork artwork) {
+        userSelectedArtwork.put(key, artwork);
+    }
+
+    public void removeUserSelectedArtwork(String key) {
+        userSelectedArtwork.remove(key);
+    }
+
+    public boolean containsUserSelectedArtwork(String key) {
+        return userSelectedArtwork.containsKey(key);
+    }
+
 
     private static Logger jaudioTaggerLogger1 = Logger.getLogger("org.jaudiotagger.audio");
     private static Logger jaudioTaggerLogger2 = Logger.getLogger("org.jaudiotagger");
