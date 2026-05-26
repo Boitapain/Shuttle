@@ -296,7 +296,7 @@ internal class MediaPlayerPlayback(context: Context) : LocalPlayback(context), M
     }
 
     override fun updateLastKnownStreamPosition() {
-
+        // No-op for MediaPlayer implementation.
     }
 
     private fun createMediaPlayer(context: Context): MediaPlayer {

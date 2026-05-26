@@ -120,12 +120,11 @@ public class ShuttleApplication extends DaggerApplication {
             return;
         }
 
-        // Todo: Remove for production builds. Useful for tracking down crashes in beta.
-        RxDogTag.install();
-
         if (BuildConfig.DEBUG) {
-            // enableStrictMode();
+            RxDogTag.install();
         }
+
+
 
         refWatcher = LeakCanary.install(this);
         // workaround to fix InputMethodManager leak as suggested by LeakCanary lib
@@ -236,7 +235,7 @@ public class ShuttleApplication extends DaggerApplication {
         try {
             return getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
         } catch (PackageManager.NameNotFoundException | NullPointerException ignored) {
-
+            // Package name not found, or context is null. Return "unknown" as default.
         }
         return "unknown";
     }
@@ -314,6 +313,7 @@ public class ShuttleApplication extends DaggerApplication {
             try {
                 getContentResolver().delete(PlayCountTable.URI, selection.toString(), null);
             } catch (IllegalArgumentException ignored) {
+                // Ignore errors if the playlist URI is invalid or the playlist is already empty.
             }
         });
     }
