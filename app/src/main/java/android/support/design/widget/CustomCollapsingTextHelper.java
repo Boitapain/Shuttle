@@ -18,6 +18,7 @@
 package android.support.design.widget;
 
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -304,12 +305,16 @@ public final class CustomCollapsingTextHelper {
                 ? new int[]{android.R.attr.fontFamily}
                 : new int[0]);
         try {
-            final String family = a.getString(0);
-            if (family != null) {
-                return Typeface.create(family, Typeface.NORMAL);
+            if (a.length() > 0) {
+                final String family = a.getString(0);
+                if (family != null) {
+                    return Typeface.create(family, Typeface.NORMAL);
+                }
             }
         } catch (Exception e) {
-            throw new RuntimeException("Unable to read font family typeface: " + resId);
+            Resources.NotFoundException exception = new Resources.NotFoundException("Unable to read font family typeface: " + resId);
+            exception.initCause(e);
+            throw exception;
         } finally {
             a.recycle();
         }
